@@ -1,0 +1,36 @@
+POST {{host}}/users-addresses
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "streetAndNumber": "Ardilla #310",
+  "city": "Mexico",
+  "zipCode": "57000",
+  "state": "Mexico",
+  "userId": 10
+}
+
+###
+GET {{host}}/users-addresses
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+PATCH {{host}}/users-addresses/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "streetAndNumber": "Ardilla #310",
+  "city": "Mexico",
+  "zipCode": "57000",
+  "state": "Mexico"
+}
+
+###
+DELETE {{host}}/users-addresses/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###

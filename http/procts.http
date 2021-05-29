@@ -1,0 +1,4 @@
+###
+GET {{host}}/products
+Content-Type: application/json
+Authorization: Bearer {{token}}

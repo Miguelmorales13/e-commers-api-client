@@ -1,0 +1,36 @@
+POST {{host}}/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "cacahuatisimo13@gmail.com",
+  "password": "admin123",
+  "name": "miguel",
+  "lastName": "miguel",
+  "secondLastName": "miguel"
+}
+
+###
+GET {{host}}/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+PATCH {{host}}/users/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "cacahuatisimo13@gmail.com",
+  "name": "miguel",
+  "lastName": "miguel",
+  "secondLastName": "miguel"
+}
+
+###
+DELETE {{host}}/users/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
