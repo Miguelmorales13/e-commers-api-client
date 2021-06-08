@@ -22,8 +22,6 @@ import java.util.Date;
 @SQLDelete(sql = "UPDATE images_products SET deleted_at = NOW() WHERE id = ?", check = ResultCheckStyle.COUNT)
 @Where(clause = "deleted_at is null")
 public class ImagesProductModel implements Serializable {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "bigint")
