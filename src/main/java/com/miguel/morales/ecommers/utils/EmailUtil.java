@@ -1,5 +1,6 @@
 package com.miguel.morales.ecommers.utils;
 
+import com.miguel.morales.ecommers.utils.enums.TemplateType;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -22,7 +23,7 @@ public class EmailUtil {
 
     @Value("${spring.mail.username}")
     private String from;
-    
+
     @Autowired
     private JavaMailSender sender;
 
@@ -30,7 +31,7 @@ public class EmailUtil {
     private Configuration emailConfig;
 
 
-    public void sendEmail(String to, String subject, Map<String, Object> model) {
+    public void sendEmail(String to, String subject, Map<String, Object> model, TemplateType type) {
         MimeMessage message = sender.createMimeMessage();
         try {
             // set mediaType
@@ -38,7 +39,7 @@ public class EmailUtil {
             // add attachment
             helper.addAttachment("logo.png", new ClassPathResource("logo.png"));
 
-            Template t = emailConfig.getTemplate("confirm-email.ftl");
+            Template t = emailConfig.getTemplate(type.toString() + ".ftl");
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
 
             helper.setTo(to);

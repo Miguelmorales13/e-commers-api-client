@@ -29,7 +29,7 @@ public class UserService implements HibernateService<UserModel, CreateUserDto, U
 
     @Transactional(readOnly = true)
     public Optional<UserModel> getOneByUser(String user) {
-        return userRepository.findByEmail(user);
+        return userRepository.findFirstByEmail(user);
     }
 
     @Override

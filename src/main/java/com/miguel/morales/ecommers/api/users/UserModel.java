@@ -1,6 +1,7 @@
 package com.miguel.morales.ecommers.api.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.miguel.morales.ecommers.api.auth.dto.SignUpDto;
 import com.miguel.morales.ecommers.api.users.dto.CreateUserDto;
 import com.miguel.morales.ecommers.api.usersAddresses.UserAddressModel;
 import lombok.AllArgsConstructor;
@@ -15,8 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -92,5 +96,24 @@ public class UserModel implements Serializable {
         this.secondLastName = dto.getSecondLastName();
         this.email = dto.getEmail();
         this.password = dto.getPassword();
+    }
+
+    public UserModel(SignUpDto dto) {
+        this.name = dto.getName();
+        this.lastName = dto.getLastName();
+        this.secondLastName = dto.getSecondLastName();
+        this.email = dto.getEmail();
+        this.password = dto.getPassword();
+    }
+
+    public Map<String, Object> toMap() throws IllegalAccessException {
+        HashMap<String, Object> json = new HashMap<String, Object>();
+        Field[] allFields = this.getClass().getDeclaredFields();
+        for (Field field : allFields) {
+            field.setAccessible(true);
+            Object value = field.get(this);
+            json.put(field.getName(), value);
+        }
+        return json;
     }
 }
