@@ -1,5 +1,6 @@
 FROM openjdk:16-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+WORKDIR /app
+COPY . .
+RUN ./mvnw package
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","./app.jar"]
+ENTRYPOINT ["java","-jar","/app/target/e-commers-0.0.1-SNAPSHOT.jar"]
