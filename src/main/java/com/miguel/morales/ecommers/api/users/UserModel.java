@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.miguel.morales.ecommers.api.auth.dto.SignUpDto;
 import com.miguel.morales.ecommers.api.users.dto.CreateUserDto;
 import com.miguel.morales.ecommers.api.usersAddresses.UserAddressModel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ResultCheckStyle;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -22,7 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -61,6 +60,7 @@ public class UserModel implements Serializable {
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<UserAddressModel> addresses;
 
     @Column(name = "created_at")
@@ -116,4 +116,5 @@ public class UserModel implements Serializable {
         }
         return json;
     }
+
 }

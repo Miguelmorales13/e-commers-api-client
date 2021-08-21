@@ -1,6 +1,6 @@
 package com.miguel.morales.ecommers.api.usersAddresses.dto;
 
-import com.miguel.morales.ecommers.api.users.UserModel;
+import com.miguel.morales.ecommers.api.crud.ModelDto;
 import com.miguel.morales.ecommers.api.usersAddresses.UserAddressModel;
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CreateUserAddressDto {
+public class CreateUserAddressDto implements ModelDto<UserAddressModel> {
     @NotEmpty(message = "The street and number is not empty")
     private String streetAndNumber;
     @NotEmpty(message = "The city is not empty")
@@ -23,8 +23,8 @@ public class CreateUserAddressDto {
 
     private Long userId;
 
-    public UserAddressModel toModel(UserModel user) {
-        return new UserAddressModel(this, user);
+    @Override
+    public UserAddressModel toModel() {
+        return new UserAddressModel(this, null);
     }
-
 }

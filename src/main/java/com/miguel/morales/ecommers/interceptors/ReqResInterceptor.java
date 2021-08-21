@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -20,32 +21,30 @@ public class ReqResInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String log = "[REQUEST][PATH:".concat(request.getServletPath()).concat("]");
-        log = log.concat("[TYPE:").concat(request.getMethod()).concat("]");
-
+        UUID uuid = UUID.randomUUID();
+        String log = "[REQUEST|".concat(uuid.toString()).concat("][").concat(request.getMethod()).concat("|").concat(request.getServletPath()).concat("]");
         if (handler instanceof HandlerMethod) {
             HandlerMethod res = (HandlerMethod) handler;
-            log = log.concat("[Class:").concat(res.getMethod().getDeclaringClass().getName()).concat("]");
-            log = log.concat("[Method:").concat(res.getMethod().getName()).concat("]");
+            log = log.concat("[").concat(res.getMethod().getDeclaringClass().getSimpleName());
+            log = log.concat("|").concat(res.getMethod().getName()).concat("]");
         }
-
+        logger.info(log);
         request.setAttribute("time", currentTimeMillis());
+        request.setAttribute("uuid", uuid.toString());
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         long time = currentTimeMillis() - ((long) request.getAttribute("time"));
-        String log = "[RESPONSE][PATH:".concat(request.getServletPath()).concat("]")
-                .concat("[TYPE:").concat(request.getMethod()).concat("]");
+        String uuid = (String) request.getAttribute("uuid");
+        String log = "[RESPONSE|".concat(uuid).concat("][").concat(request.getMethod()).concat("|").concat(request.getServletPath()).concat("]");
         if (handler instanceof HandlerMethod) {
             HandlerMethod res = (HandlerMethod) handler;
-            log = log.concat("[Class:").concat(res.getMethod().getDeclaringClass().getName()).concat("]");
-            log = log.concat("[Method:").concat(res.getMethod().getName()).concat("]");
+            log = log.concat("[").concat(res.getMethod().getDeclaringClass().getSimpleName());
+            log = log.concat("|").concat(res.getMethod().getName()).concat("]");
         }
-
-        log = log.concat("[TIME:").concat(String.valueOf(time)).concat("ms]");
-//        if (response.c)
+        log = log.concat("[TIME|").concat(String.valueOf(time)).concat("ms]");
         logger.info(log);
     }
 

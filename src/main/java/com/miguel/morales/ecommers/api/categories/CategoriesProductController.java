@@ -1,9 +1,7 @@
 package com.miguel.morales.ecommers.api.categories;
 
-import com.miguel.morales.ecommers.api.crud.Generator;
+import com.miguel.morales.ecommers.interceptors.anotations.ResponseSuccess;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +16,10 @@ import java.util.List;
 public class CategoriesProductController {
     @Autowired
     CategoriesProductService categoriesProductService;
-    @Autowired
-    Generator generator;
 
     @GetMapping()
-    public ResponseEntity<?> getAll() {
-        List<CategoriesProductModel> categoriesProducts = categoriesProductService.getAll();
-        return generator.response(categoriesProducts, "done", HttpStatus.OK);
+    @ResponseSuccess(message = "get success")
+    public List<CategoriesProductModel> getAll() {
+        return categoriesProductService.getAll();
     }
 }

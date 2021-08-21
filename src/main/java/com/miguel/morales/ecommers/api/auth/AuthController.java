@@ -3,12 +3,10 @@ package com.miguel.morales.ecommers.api.auth;
 import com.miguel.morales.ecommers.api.auth.dto.SignInDto;
 import com.miguel.morales.ecommers.api.auth.dto.SignInResponseDto;
 import com.miguel.morales.ecommers.api.auth.dto.SignUpDto;
-import com.miguel.morales.ecommers.api.crud.Generator;
 import com.miguel.morales.ecommers.api.users.UserModel;
+import com.miguel.morales.ecommers.interceptors.anotations.ResponseSuccess;
 import com.miguel.morales.ecommers.utils.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,9 +18,6 @@ public class AuthController {
 
 
     @Autowired
-    private Generator generator;
-
-    @Autowired
     private AuthService authService;
 
 
@@ -31,14 +26,15 @@ public class AuthController {
 
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> signIn(@Valid @RequestBody() SignInDto signIn) throws Exception {
-        final SignInResponseDto res = authService.signIn(signIn);
-        return generator.response(res, "Login successful", HttpStatus.OK);
+    @ResponseSuccess(message = "Login successful")
+    public SignInResponseDto signIn(@Valid @RequestBody() SignInDto signIn) throws Exception {
+        return authService.signIn(signIn);
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@Valid @RequestBody() SignUpDto signUp) throws Exception {
+    @ResponseSuccess(message = "Your register is successful but now you need confirm your email")
+    public UserModel signUp(@Valid @RequestBody() SignUpDto signUp) throws Exception {
         final UserModel user = authService.singUp(signUp);
-        return generator.response(user, "Your register is successful but now you need confirm your email", HttpStatus.OK);
+        return user;
     }
 }

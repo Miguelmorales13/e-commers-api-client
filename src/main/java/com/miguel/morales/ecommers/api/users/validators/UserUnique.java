@@ -6,10 +6,10 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = UserUniqueValidator.class)
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserUnique {
-    String message() default "{users.isUnique}";
+    String message() default "message default";
 
     Class<?>[] groups() default {};
 

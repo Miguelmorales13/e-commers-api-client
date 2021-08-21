@@ -5,5 +5,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ImagesProductRepository extends CrudRepository<ImagesProductModel, Long> {
-//    List<UserModel> findAllBy/(String email);
 }
